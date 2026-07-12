@@ -2,11 +2,21 @@ import mongoose from "mongoose";
 
 const companySchema = new mongoose.Schema(
     {
+        organizationId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Organization",
+            required: [true, "Organization is required"],
+            index: true,
+        },
+
         companyName: {
             type: String,
             required: [true, "Company name is required"],
             trim: true,
-            maxlength: [100, "Company name cannot exceed 100 characters"],
+            maxlength: [
+                100,
+                "Company name cannot exceed 100 characters",
+            ],
         },
     },
     {
@@ -15,9 +25,12 @@ const companySchema = new mongoose.Schema(
     }
 );
 
-// Case-insensitive unique index
+
 companySchema.index(
-    { companyName: 1 },
+    {
+        organizationId: 1,
+        companyName: 1,
+    },
     {
         unique: true,
         collation: {
@@ -27,6 +40,11 @@ companySchema.index(
     }
 );
 
-const Company = mongoose.model("Company", companySchema);
+
+const Company = mongoose.model(
+    "Company",
+    companySchema
+);
+
 
 export default Company;
