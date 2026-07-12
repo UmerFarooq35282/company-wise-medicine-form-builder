@@ -1,17 +1,52 @@
 import { Router } from "express";
 
+
 import {
+
     createItem,
-    deleteItem,
+
     getItemsByCompany,
-} from "../controllers/item.controller.js";
+
+    getItemsByOrganization,
+
+    deleteItem
+
+}
+
+    from "../controllers/item.controller.js";
+
+
 
 const router = Router();
 
-router.post("/", createItem);
 
-router.get("/:companyId", getItemsByCompany);
 
-router.delete("/:id", deleteItem);
+router.post(
+    "/",
+    createItem
+);
+
+
+
+router.get(
+    "/company/:companyId",
+    getItemsByCompany
+);
+
+
+
+router.get(
+    "/organization/:organizationId",
+    getItemsByOrganization
+);
+
+
+
+router.delete(
+    "/:id",
+    deleteItem
+);
+
+
 
 export default router;
