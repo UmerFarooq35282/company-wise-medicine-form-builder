@@ -5,6 +5,9 @@ import compression from "compression";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
+import notFound from "./middlewares/notFound.middleware.js";
+import errorHandler from "./middlewares/error.middleware.js";
+
 const app = express();
 
 app.use(cors());
@@ -20,6 +23,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(morgan("dev"));
+
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.get("/health", (req, res) => {
     res.status(200).json({
