@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import notFound from "./middlewares/notFound.middleware.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
+import companyRoutes from "./routes/company.routes.js";
+
 const app = express();
 
 app.use(cors());
@@ -25,8 +27,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 
-app.use(notFound);
-app.use(errorHandler);
+
 
 app.get("/health", (req, res) => {
     res.status(200).json({
@@ -36,5 +37,10 @@ app.get("/health", (req, res) => {
         timestamp: new Date().toISOString()
     });
 });
+
+app.use("/api/companies", companyRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;

@@ -5,23 +5,23 @@ import MESSAGES from "../constants/messages.js";
 
 class CompanyService {
     async create(companyName) {
-        const exists = await Company.findOne({
-            companyName,
-        }).collation({
-            locale: "en",
-            strength: 2,
-        });
+        try {
 
-        if (exists) {
-            throw new ApiError(
-                HTTP_STATUS.CONFLICT,
-                "Company already exists"
-            );
+            return await Company.create({
+                companyName,
+            });
+
+        } catch (error) {
+
+            if (error.code === 11000) {
+                throw new ApiError(
+                    HTTP_STATUS.CONFLICT,
+                    "Company already exists"
+                );
+            }
+
+            throw error;
         }
-
-        return await Company.create({
-            companyName,
-        });
     }
 
     async findAll() {
