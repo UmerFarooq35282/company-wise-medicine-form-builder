@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/error.middleware.js";
 
 import companyRoutes from "./routes/company.routes.js";
 import itemRoutes from "./routes/item.routes.js";
+import organizationRoutes from "./routes/organization.routes.js";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.get("/health", (req, res) => {
     });
 });
 
+app.use("/api/organizations", organizationRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/items", itemRoutes);
 
