@@ -9,6 +9,7 @@ import notFound from "./middlewares/notFound.middleware.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 import companyRoutes from "./routes/company.routes.js";
+import itemRoutes from "./routes/item.routes.js";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/companies", companyRoutes);
+app.use("/api/items", itemRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
