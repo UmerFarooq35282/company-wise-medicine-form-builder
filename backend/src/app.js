@@ -21,10 +21,12 @@ app.use(cookieParser());
 
 app.use(morgan("dev"));
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).json({
         success: true,
-        message: "Medicine Form Builder API Running"
+        status: "UP",
+        environment: process.env.NODE_ENV,
+        timestamp: new Date().toISOString()
     });
 });
 
