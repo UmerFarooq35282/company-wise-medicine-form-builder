@@ -9,7 +9,9 @@ import {
 
     getCompaniesByOrganization,
 
-    deleteCompany
+    deleteCompany,
+
+    getCompanyById
 
 
 }
