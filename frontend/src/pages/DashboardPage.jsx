@@ -4,9 +4,11 @@ import { Grid, Paper, Typography } from "@mui/material";
 import DashboardLayout from "../components/layout/DashboardLayout";
 
 import OrganizationSelect from "../components/organizations/OrganizationSelect";
+import CompanySelect from "../components/company/CompanySelect";
 
 function DashboardPage() {
   const [organizationId, setOrganizationId] = useState("");
+  const [companyId, setCompanyId] = useState("");
 
   return (
     <DashboardLayout>
@@ -27,7 +29,15 @@ function DashboardPage() {
           <Paper sx={{ p: 3, minHeight: 500 }}>
             <OrganizationSelect
               value={organizationId}
-              onChange={setOrganizationId}
+              onChange={(value) => {
+                setOrganizationId(value);
+                setCompanyId("");
+              }}
+            />
+            <CompanySelect
+              organizationId={organizationId}
+              value={companyId}
+              onChange={setCompanyId}
             />
           </Paper>
         </Grid>
