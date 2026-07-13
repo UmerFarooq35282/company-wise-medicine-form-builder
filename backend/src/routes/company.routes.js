@@ -47,6 +47,7 @@ router.delete(
     deleteCompany
 );
 
+router.get("/:id", getCompanyById);
 
 
 export default router;

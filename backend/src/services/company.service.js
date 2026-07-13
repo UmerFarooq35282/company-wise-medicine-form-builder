@@ -96,6 +96,19 @@ class CompanyService {
     }
 
 
+    async findById(id) {
+        const company = await Company.findById(id);
+
+        if (!company) {
+            throw new ApiError(
+                HTTP_STATUS.NOT_FOUND,
+                "Company not found"
+            );
+        }
+
+        return company;
+    }
+
 
 
     async delete(id) {

@@ -123,3 +123,12 @@ export const deleteCompany =
 
 
     });
+
+export const getCompanyById = asyncHandler(async (req, res) => {
+    const company = await companyService.findById(req.params.id);
+
+    return sendResponse(res, {
+        message: "Company fetched successfully",
+        data: company,
+    });
+});
