@@ -5,6 +5,8 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 
 import OrganizationSelect from "../components/organizations/OrganizationSelect";
 import CompanySelect from "../components/company/CompanySelect";
+import MedicineForm from "../components/medicine/MedicineForm";
+import MedicineTable from "../components/medicine/MedicineTable";
 
 function DashboardPage() {
   const [organizationId, setOrganizationId] = useState("");
@@ -43,7 +45,11 @@ function DashboardPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          <Paper sx={{ p: 3, minHeight: 500 }}>Right Panel</Paper>
+          <Paper sx={{ p: 3 }}>
+            <MedicineForm companyId={companyId} />
+
+            <MedicineTable companyId={companyId} />
+          </Paper>
         </Grid>
       </Grid>
     </DashboardLayout>
