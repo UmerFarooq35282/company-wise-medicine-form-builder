@@ -45,6 +45,6 @@ app.use("/api/companies", companyRoutes);
 app.use("/api/items", itemRoutes);
 
 app.use(notFound);
-app.use(errorHandler);
+app.use(errorHandler);  
 
 export default app;
