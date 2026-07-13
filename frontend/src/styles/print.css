@@ -1,0 +1,111 @@
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ececec;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.print-btn {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  padding: 12px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  background: #1976d2;
+  color: #fff;
+  font-size: 16px;
+}
+
+.page {
+  width: 210mm;
+
+  min-height: 297mm;
+
+  background: #fff;
+
+  margin: 15px auto;
+
+  padding: 10mm;
+
+  box-sizing: border-box;
+
+  page-break-after: always;
+}
+
+.page h2 {
+  text-align: center;
+
+  margin-bottom: 5px;
+}
+
+.page h3 {
+  text-align: center;
+
+  margin-bottom: 25px;
+}
+
+.tables {
+  display: flex;
+
+  gap: 20px;
+}
+
+.tables table {
+  width: 50%;
+
+  border-collapse: collapse;
+}
+
+.tables th {
+  border: 1px solid #000;
+
+  padding: 8px;
+
+  background: #f3f3f3;
+}
+
+.tables td {
+  border: 1px solid #000;
+
+  padding: 8px;
+
+  height: 30px;
+}
+
+.tables th:nth-child(1),
+.tables td:nth-child(1) {
+  width: 78%;
+}
+
+.tables th:nth-child(2),
+.tables td:nth-child(2) {
+  width: 11%;
+}
+
+.tables th:nth-child(3),
+.tables td:nth-child(3) {
+  width: 11%;
+}
+
+@media print {
+  .print-btn {
+    display: none;
+  }
+
+  body {
+    background: white;
+  }
+
+  .page {
+    margin: 0;
+
+    box-shadow: none;
+  }
+}
