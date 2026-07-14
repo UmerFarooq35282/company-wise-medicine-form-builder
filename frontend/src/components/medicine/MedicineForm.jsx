@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createItem } from "../../api/item.api";
 
-const types = ["TAB", "SYP", "INJ"];
+const types = ["TAB", "SYP", "INJ", "CAP" , "SACH"];
 
 function MedicineForm({ companyId }) {
   const queryClient = useQueryClient();

@@ -4,22 +4,14 @@ import MEDICINE_TYPES from "../constants/medicineTypes.js";
 
 
 export const createItemSchema = Joi.object({
-
     companyId:
-
         Joi.string()
             .required()
             .messages({
-
                 "any.required":
                     "Company is required"
-
             }),
-
-
-
     itemName:
-
         Joi.string()
             .trim()
             .min(2)
@@ -31,19 +23,10 @@ export const createItemSchema = Joi.object({
                     "Medicine name is required"
 
             }),
-
-
-
     type:
 
         Joi.string()
-
-            .valid(
-                ...Object.values(
-                    MEDICINE_TYPES
-                )
-            )
-
+            .valid(...MEDICINE_TYPES)
             .required()
 
 });
