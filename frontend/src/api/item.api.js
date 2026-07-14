@@ -5,6 +5,14 @@ export const getItemsByCompany = async (companyId) => {
     return data.data;
 };
 
+export const getItemsByOrganization = async (organizationId) => {
+    const response = await api.get(
+        `/items/organization/${organizationId}`
+    );
+
+    return response.data.data;
+};
+
 export const createItem = async (payload) => {
     const { data } = await api.post("/items", payload);
     return data.data;

@@ -1,22 +1,28 @@
 import PrintHeader from "./PrintHeader";
 import PrintTable from "./PrintTable";
 
-function PrintPageLayout({ companyName, pageItems, pageNumber, totalPages }) {
-  const left = pageItems.slice(0, 40);
-  const right = pageItems.slice(40, 80);
+function PrintPageLayout({
+  organizationName,
+  companyName,
+  pageItems,
+  pageNumber,
+  totalPages,
+}) {
+  const leftItems = pageItems.slice(0, 40);
+  const rightItems = pageItems.slice(40, 80);
 
   return (
     <div className="page">
       <PrintHeader
+        organizationName={organizationName}
         companyName={companyName}
         pageNumber={pageNumber}
         totalPages={totalPages}
       />
 
       <div className="tables">
-        <PrintTable items={left} />
-
-        <PrintTable items={right} />
+        <PrintTable items={leftItems} />
+        <PrintTable items={rightItems} />
       </div>
     </div>
   );

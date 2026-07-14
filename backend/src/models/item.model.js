@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import MEDICINE_TYPES from "../constants/medicineTypes.js";
+import { MEDICINE_TYPES } from "../constants/medicineTypes.js";
 
 
 const itemSchema = new mongoose.Schema(

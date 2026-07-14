@@ -1,26 +1,22 @@
 function PrintTable({ items = [] }) {
   return (
-    <table>
+    <table className="print-table">
       <thead>
         <tr>
-          <th>Item</th>
-          <th>Bx Qty</th>
-          <th>Ls Qty</th>
+          <th style={{ width: "72%" }}>Medicine Item</th>
+          <th style={{ width: "14%" }}>Bx Qty</th>
+          <th style={{ width: "14%" }}>Ls Qty</th>
         </tr>
       </thead>
 
       <tbody>
-        {Array.from({ length: 40 }).map((_, index) => {
-          const item = items[index];
-
-          return (
-            <tr key={index}>
-              <td>{item?.itemName || ""}</td>
-              <td></td>
-              <td></td>
-            </tr>
-          );
-        })}
+        {items.map((item) => (
+          <tr key={item._id}>
+            <td>{item.itemName}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

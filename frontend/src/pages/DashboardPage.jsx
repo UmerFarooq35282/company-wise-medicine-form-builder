@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 
 import DashboardLayout from "../components/layout/DashboardLayout";
-
-import OrganizationSelect from "../components/organizations/OrganizationSelect";
-import CompanySelect from "../components/company/CompanySelect";
 import MedicineForm from "../components/medicine/MedicineForm";
-import MedicineTable from "../components/medicine/MedicineTable";
 
 function DashboardPage() {
   const [organizationId, setOrganizationId] = useState("");
@@ -14,44 +10,37 @@ function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12 }}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h5" fontWeight={700}>
-              Medicine Management
-            </Typography>
+      <Box
+        sx={{
+          minHeight: "calc(100vh - 64px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#f4f6f8",
+          p: 3,
+        }}
+      >
+        <Paper
+          elevation={6}
+          sx={{
+            width: "100%",
+            maxWidth: 700,
+            borderRadius: 4,
+            p: 5,
+          }}
+        >
+          <Typography variant="h4" fontWeight={700} textAlign="center" mb={4}>
+            Medicine Form Builder
+          </Typography>
 
-            <Typography color="text.secondary" mt={1}>
-              Manage organizations, companies and medicines.
-            </Typography>
-          </Paper>
-        </Grid>
-
-        <Grid size={{ xs: 12, md: 5 }}>
-          <Paper sx={{ p: 3, minHeight: 500 }}>
-            <OrganizationSelect
-              value={organizationId}
-              onChange={(value) => {
-                setOrganizationId(value);
-                setCompanyId("");
-              }}
-            />
-            <CompanySelect
-              organizationId={organizationId}
-              value={companyId}
-              onChange={setCompanyId}
-            />
-          </Paper>
-        </Grid>
-
-        <Grid size={{ xs: 12, md: 7 }}>
-          <Paper sx={{ p: 3 }}>
-            <MedicineForm companyId={companyId} />
-
-            <MedicineTable companyId={companyId} />
-          </Paper>
-        </Grid>
-      </Grid>
+          <MedicineForm
+            organizationId={organizationId}
+            companyId={companyId}
+            setOrganizationId={setOrganizationId}
+            setCompanyId={setCompanyId}
+          />
+        </Paper>
+      </Box>
     </DashboardLayout>
   );
 }

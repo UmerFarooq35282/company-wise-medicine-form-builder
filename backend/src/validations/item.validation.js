@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import MEDICINE_TYPES from "../constants/medicineTypes.js";
+import { MEDICINE_TYPES } from "../constants/medicineTypes.js";
 
 
 export const createItemSchema = Joi.object({

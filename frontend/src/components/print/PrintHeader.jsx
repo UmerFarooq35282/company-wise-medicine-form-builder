@@ -1,12 +1,17 @@
-function PrintHeader({ companyName, pageNumber, totalPages }) {
+function PrintHeader({
+  organizationName,
+  companyName,
+  pageNumber,
+  totalPages,
+}) {
   return (
     <div className="print-header">
-      <h2>{companyName}</h2>
+      <h2>{organizationName}</h2>
 
-      <h3>Medicine Form</h3>
+      {/* <h3>{companyName}</h3> */}
 
       <p>
-        Page {pageNumber} of {totalPages}
+        Page {pageNumber} / {totalPages}
       </p>
     </div>
   );

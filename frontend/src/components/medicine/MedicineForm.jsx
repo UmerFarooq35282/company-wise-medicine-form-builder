@@ -1,43 +1,83 @@
 import { useState } from "react";
-import { Grid, TextField, Button, MenuItem } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
+import {
+  Stack,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
+import PreviewIcon from "@mui/icons-material/Preview";
 
 import toast from "react-hot-toast";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+
+import OrganizationSelect from "../organizations/OrganizationSelect";
+import CompanySelect from "../company/CompanySelect";
 
 import { createItem } from "../../api/item.api";
 
-const types = ["TAB", "SYP", "INJ", "CAP" , "SACH"];
+const MEDICINE_TYPES = [
+  "TAB",
+  "CAP",
+  "SYP",
+  "INJ",
+  "SACHET",
+  "CREAM",
+  "GEL",
+  "SOAP",
+  "OINT",
+  "SPRAY",
+  "LOTION",
+  "DROP",
+];
 
-function MedicineForm({ companyId }) {
-  const queryClient = useQueryClient();
+function MedicineForm({
+  organizationId,
+  companyId,
+  setOrganizationId,
+  setCompanyId,
+}) {
+  const navigate = useNavigate();
 
-  const [itemName, setItemName] = useState("");
   const [type, setType] = useState("TAB");
+  const [itemName, setItemName] = useState("");
 
   const mutation = useMutation({
     mutationFn: createItem,
 
     onSuccess: () => {
-      toast.success("Medicine Added");
-
-      queryClient.invalidateQueries({
-        queryKey: ["items", companyId],
-      });
+      toast.success("Medicine added successfully");
 
       setItemName("");
       setType("TAB");
     },
 
     onError: (error) => {
-      toast.error(error?.response?.data?.message || "Failed");
+      toast.error(error?.response?.data?.message || "Unable to add medicine");
     },
   });
 
   const handleSubmit = () => {
-    if (!companyId) return toast.error("Select Company");
+    if (!organizationId) {
+      return toast.error("Please select an organization.");
+    }
 
-    if (!itemName.trim()) return toast.error("Medicine Name Required");
+    if (!companyId) {
+      return toast.error("Please select a company.");
+    }
+
+    if (!itemName.trim()) {
+      return toast.error("Medicine name is required.");
+    }
 
     mutation.mutate({
       companyId,
@@ -47,44 +87,107 @@ function MedicineForm({ companyId }) {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          label="Medicine Name"
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
-        />
-      </Grid>
+    <Stack spacing={3}>
+      {/* Organization */}
 
-      <Grid item xs={12} md={3}>
-        <TextField
-          select
-          fullWidth
-          label="Type"
+      <Box>
+        <Typography mb={1} fontWeight={600}>
+          Organization
+        </Typography>
+
+        <Stack direction="row" spacing={2}>
+          <Box flex={1}>
+            <OrganizationSelect
+              value={organizationId}
+              onChange={(value) => {
+                setOrganizationId(value);
+                setCompanyId("");
+              }}
+            />
+          </Box>
+
+          <Button variant="contained" startIcon={<AddIcon />}>
+            Add
+          </Button>
+        </Stack>
+      </Box>
+
+      {/* Company */}
+
+      <Box>
+        <Typography mb={1} fontWeight={600}>
+          Company
+        </Typography>
+
+        <Stack direction="row" spacing={2}>
+          <Box flex={1}>
+            <CompanySelect
+              organizationId={organizationId}
+              value={companyId}
+              onChange={setCompanyId}
+            />
+          </Box>
+
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            disabled={!organizationId}
+          >
+            Add
+          </Button>
+        </Stack>
+      </Box>
+
+      {/* Medicine Type */}
+
+      <FormControl fullWidth>
+        <InputLabel>Medicine Type</InputLabel>
+
+        <Select
           value={type}
+          label="Medicine Type"
           onChange={(e) => setType(e.target.value)}
         >
-          {types.map((t) => (
-            <MenuItem key={t} value={t}>
-              {t}
+          {MEDICINE_TYPES.map((item) => (
+            <MenuItem key={item} value={item}>
+              {item}
             </MenuItem>
           ))}
-        </TextField>
-      </Grid>
+        </Select>
+      </FormControl>
 
-      <Grid item xs={12} md={3}>
+      {/* Medicine Name */}
+
+      <TextField
+        fullWidth
+        label="Medicine Name"
+        value={itemName}
+        onChange={(e) => setItemName(e.target.value)}
+      />
+
+      {/* Buttons */}
+
+      <Stack spacing={2}>
         <Button
-          fullWidth
+          size="large"
           variant="contained"
-          sx={{ height: "56px" }}
           onClick={handleSubmit}
           disabled={mutation.isPending}
         >
-          Add Item
+          {mutation.isPending ? "Saving..." : "Add Medicine"}
         </Button>
-      </Grid>
-    </Grid>
+
+        <Button
+          size="large"
+          variant="outlined"
+          startIcon={<PreviewIcon />}
+          disabled={!organizationId}
+          onClick={() => navigate(`/print/${organizationId}`)}
+        >
+          Preview Medicine Form
+        </Button>
+      </Stack>
+    </Stack>
   );
 }
 

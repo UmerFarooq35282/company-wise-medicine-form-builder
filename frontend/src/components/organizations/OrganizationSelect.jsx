@@ -1,67 +1,45 @@
-import { useState } from "react";
-
-import Select from "react-select";
-
-import { Button, Stack } from "@mui/material";
-
-import AddIcon from "@mui/icons-material/Add";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  CircularProgress,
+} from "@mui/material";
 
 import { useQuery } from "@tanstack/react-query";
 
 import { getOrganizations } from "../../api/organization.api";
 
-import PageLoader from "../common/PageLoader";
-
-import AddOrganizationModal from "./AddOrganizationModal";
-
-function OrganizationSelect({
-  value,
-
-  onChange,
-}) {
-  const [open, setOpen] = useState(false);
-
-  const { data, isLoading } = useQuery({
+function OrganizationSelect({ value, onChange }) {
+  const { data = [], isLoading } = useQuery({
     queryKey: ["organizations"],
-
     queryFn: getOrganizations,
   });
 
-  if (isLoading) {
-    return <PageLoader />;
-  }
-
-  const options = data.map((org) => ({
-    value: org._id,
-
-    label: org.organizationName,
-  }));
-
   return (
-    <>
-      <Stack direction="row" spacing={2} mb={2}>
-        <div style={{ flex: 1 }}>
-          <Select
-            options={options}
-            value={options.find((item) => item.value === value)}
-            onChange={(selected) => {
-              onChange(selected.value);
-            }}
-            placeholder="Select Organization"
-          />
-        </div>
+    <FormControl fullWidth size="medium">
+      <InputLabel>Select Organization</InputLabel>
 
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => setOpen(true)}
-        >
-          Add
-        </Button>
-      </Stack>
+      <Select
+        value={value}
+        label="Select Organization"
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {isLoading && (
+          <MenuItem disabled>
+            <CircularProgress size={18} sx={{ mr: 1 }} />
+            Loading...
+          </MenuItem>
+        )}
 
-      <AddOrganizationModal open={open} onClose={() => setOpen(false)} />
-    </>
+        {!isLoading &&
+          data.map((organization) => (
+            <MenuItem key={organization._id} value={organization._id}>
+              {organization.organizationName}
+            </MenuItem>
+          ))}
+      </Select>
+    </FormControl>
   );
 }
 

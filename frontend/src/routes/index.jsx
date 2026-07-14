@@ -9,7 +9,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<DashboardPage />} />
 
-      <Route path="/print/:companyId" element={<PrintPage />} />
+      <Route path="/print/:organizationId" element={<PrintPage />} />
     </Routes>
   );
 }
